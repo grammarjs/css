@@ -8,6 +8,10 @@ describe('css', function(){
   test('.content {}');
   test('.content { color: green; }');
   test('.content { color: green }');
+
+  describe('comment', function(){
+    test('/* hello world */');
+  });
 });
 
 function test(str, log) {

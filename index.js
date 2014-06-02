@@ -21,7 +21,16 @@ module.exports = grammar;
  */
 
 expression('css')
-  .match(':selector*', passthrough);
+  .match(':block*', passthrough);
+
+/**
+ * All major CSS object types.
+ */
+
+expression('block')
+  .match(':selector', passthrough)
+  .match(':comment', passthrough)
+  //.match(':import', passthrough);
 
 /**
  * Selector.
@@ -39,37 +48,24 @@ expression('selector')
     ':ws',
     passthrough);
 
+/**
+ * Selector types.
+ */
+
 expression('selector.type')
   .match(':selector.type.class', value)
   // .match(':selector.type.id', value)
   // .match(':selector.type.tag', value);
+
+/**
+ * Class selector.
+ */
 
 expression('selector.type.class')
   .match(
     ':punctuation.period', 
     ':selector.name',
     passthrough);
-
-/**
- * Opening bracket.
- */
-
-expression('punctuation.bracket.begin')
-  .match('{', value);
-
-/**
- * Closing bracket.
- */
-
-expression('punctuation.bracket.end')
-  .match('}', value);
-
-/**
- * Period.
- */
-
-expression('punctuation.period')
-  .match('.', value);
 
 /**
  * Selector name.
@@ -92,16 +88,18 @@ expression('declaration')
     ':declaration.value', 
     ':ws',
     ':punctuation.semicolon',
-    passthrough)
+    passthrough);
+
+/**
+ * Declaration name.
+ */
 
 expression('declaration.name')
   .match(/[a-zA-Z\-]+/, value);
 
-expression('punctuation.colon')
-  .match(':', value);
-
-expression('punctuation.semicolon')
-  .match(';', value);
+/**
+ * Declaration value.
+ */
 
 expression('declaration.value')
   .match(/[a-zA-Z\-]+/, value);
@@ -138,6 +136,41 @@ expression('comment.body')
 
 expression('comment.end')
   .match('*/', value);
+
+/**
+ * Opening bracket.
+ */
+
+expression('punctuation.bracket.begin')
+  .match('{', value);
+
+/**
+ * Closing bracket.
+ */
+
+expression('punctuation.bracket.end')
+  .match('}', value);
+
+/**
+ * Period.
+ */
+
+expression('punctuation.period')
+  .match('.', value);
+
+/**
+ * Colon.
+ */
+
+expression('punctuation.colon')
+  .match(':', value);
+
+/**
+ * Semicolon.
+ */
+
+expression('punctuation.semicolon')
+  .match(';', value);
 
 /**
  * Whitespace.
