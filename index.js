@@ -36,6 +36,7 @@ expression('selector')
     ':declaration*',
     ':ws',
     ':punctuation.bracket.end',
+    ':ws',
     passthrough);
 
 expression('selector.type')
@@ -46,17 +47,33 @@ expression('selector.type')
 expression('selector.type.class')
   .match(
     ':punctuation.period', 
-    ':selector.name', 
+    ':selector.name',
     passthrough);
+
+/**
+ * Opening bracket.
+ */
 
 expression('punctuation.bracket.begin')
   .match('{', value);
 
+/**
+ * Closing bracket.
+ */
+
 expression('punctuation.bracket.end')
   .match('}', value);
 
+/**
+ * Period.
+ */
+
 expression('punctuation.period')
   .match('.', value);
+
+/**
+ * Selector name.
+ */
 
 expression('selector.name')
   .match(/[a-z0-9]+/, value);
@@ -93,8 +110,34 @@ expression('declaration.value')
  * Comment.
  */
 
-expression('coment')
-  .match('/*', '', '*/');
+expression('comment')
+  .match(
+    ':comment.start',
+    ':comment.body',
+    ':comment.end',
+    passthrough);
+
+/**
+ * Comment start.
+ */
+
+expression('comment.start')
+  .match('/*', value);
+
+/**
+ * TODO: need better patterns.
+ * Maybe add not operator for subexpressions?
+ */
+
+expression('comment.body')
+  .match(/[^*\/]+/, value);
+
+/**
+ * Comment end.
+ */
+
+expression('comment.end')
+  .match('*/', value);
 
 /**
  * Whitespace.
