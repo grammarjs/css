@@ -5,12 +5,18 @@ var Parser = require('grammarjs-recursive-parser');
 var parser = new Parser(grammar);
 
 describe('css', function(){
-  test('.content {}');
-  test('.content { color: green; }');
-  test('.content { color: green }');
+  describe('selector', function(){
+    test('.content {}');
+    test('.content { color: green; }');
+    test('.content { color: green }');
+  });
 
   describe('comment', function(){
     test('/* hello world */');
+  });
+
+  describe('import', function(){
+    test('@import "./foo";');
   });
 });
 

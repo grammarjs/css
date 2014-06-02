@@ -30,7 +30,7 @@ expression('css')
 expression('block')
   .match(':selector', passthrough)
   .match(':comment', passthrough)
-  //.match(':import', passthrough);
+  .match(':import', passthrough);
 
 /**
  * Selector.
@@ -105,6 +105,37 @@ expression('declaration.value')
   .match(/[a-zA-Z\-]+/, value);
 
 /**
+ * Import.
+ */
+
+expression('import')
+  .match(
+    ':punctuation.at',
+    ':import.name',
+    ':ws',
+    ':import.content',
+    ':ws',
+    ':punctuation.semicolon',
+    ':ws',
+    passthrough);
+
+/**
+ * Import name.
+ */
+
+expression('import.name')
+  .match('import', value);
+
+/**
+ * Import content.
+ *
+ * TODO: need better pattern.
+ */
+
+expression('import.content')
+  .match(/[^;]+/, value);
+
+/**
  * Comment.
  */
 
@@ -171,6 +202,13 @@ expression('punctuation.colon')
 
 expression('punctuation.semicolon')
   .match(';', value);
+
+/**
+ * At symbol.
+ */
+
+expression('punctuation.at')
+  .match('@', value);
 
 /**
  * Whitespace.
