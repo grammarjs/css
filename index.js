@@ -3,9 +3,12 @@
  * Module dependencies.
  */
 
+var Token = require('languagejs-token');
 var Grammar = require('grammarjs-grammar');
 var grammar = new Grammar('css');
 var expression = grammar.expression;
+var value = Token.value;
+var passthrough = Token.passthrough;
 
 /**
  * Expose `grammar`.
@@ -87,38 +90,15 @@ expression('declaration.value')
   .match(/[a-zA-Z\-]+/, value);
 
 /**
+ * Comment.
+ */
+
+expression('coment')
+  .match('/*', '', '*/');
+
+/**
  * Whitespace.
  */
 
 expression('ws')
   .match(/[\s]*/, value);
-
-function Token(type, content) {
-  this.type = type;
-  this.content = content;
-}
-
-function token(type, val) {
-  //return [ type, val ];
-  return new Token(type, val);
-}
-
-function value(val) {
-  return token(this.expression.name, val);
-}
-
-function passthrough() {
-  var arr = [];
-  for (var i = 0, n = arguments.length; i < n; i++) {
-    if (Array.isArray(arguments[i])) {
-      arr.push.apply(arr, arguments[i]);
-    } else {
-      arr.push(arguments[i]);
-    }
-  }
-  return token(this.expression.name, arr);
-}
-
-function log() {
-  console.log('log', arguments)
-}
