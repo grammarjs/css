@@ -1,12 +1,12 @@
 {
   "name": "css",
-  "repo": "languagejs/css",
+  "repo": "grammarjs/css",
   "description": "CSS Grammar",
+  "keywords": ["peg", "css", "grammar"],
   "version": "0.0.1",
-  "keywords": ["peg", "css", "syntax highlighting", "grammar"],
   "dependencies": {
     "grammarjs/grammar": "*",
-    "languagejs/token": "*"
+    "grammarjs/token": "*"
   },
   "development": {
     "grammarjs/recursive-parser": "*",

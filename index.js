@@ -3,10 +3,10 @@
  * Module dependencies.
  */
 
-var Token = require('languagejs-token');
+var Token = require('grammarjs-token');
 var Grammar = require('grammarjs-grammar');
 var grammar = new Grammar('css');
-var expression = grammar.expression;
+var rule = grammar.rule;
 var value = Token.value;
 var passthrough = Token.passthrough;
 
@@ -20,14 +20,14 @@ module.exports = grammar;
  * Start.
  */
 
-expression('css')
+rule('css')
   .match(':block*', passthrough);
 
 /**
  * All major CSS object types.
  */
 
-expression('block')
+rule('block')
   .match(':selector', passthrough)
   .match(':comment', passthrough)
   .match(':import', passthrough);
@@ -36,7 +36,7 @@ expression('block')
  * Selector.
  */
 
-expression('selector')
+rule('selector')
   .match(
     ':selector.type', 
     ':ws', 
@@ -52,7 +52,7 @@ expression('selector')
  * Selector types.
  */
 
-expression('selector.type')
+rule('selector.type')
   .match(':selector.type.class', value)
   // .match(':selector.type.id', value)
   // .match(':selector.type.tag', value);
@@ -61,7 +61,7 @@ expression('selector.type')
  * Class selector.
  */
 
-expression('selector.type.class')
+rule('selector.type.class')
   .match(
     ':punctuation.period', 
     ':selector.name',
@@ -71,14 +71,14 @@ expression('selector.type.class')
  * Selector name.
  */
 
-expression('selector.name')
+rule('selector.name')
   .match(/[a-z0-9]+/, value);
 
 /**
  * CSS Declaration.
  */
 
-expression('declaration')
+rule('declaration')
   .match(
     ':ws',
     ':declaration.name', 
@@ -94,21 +94,21 @@ expression('declaration')
  * Declaration name.
  */
 
-expression('declaration.name')
+rule('declaration.name')
   .match(/[a-zA-Z\-]+/, value);
 
 /**
  * Declaration value.
  */
 
-expression('declaration.value')
+rule('declaration.value')
   .match(/[a-zA-Z\-]+/, value);
 
 /**
  * Import.
  */
 
-expression('import')
+rule('import')
   .match(
     ':punctuation.at',
     ':import.name',
@@ -123,7 +123,7 @@ expression('import')
  * Import name.
  */
 
-expression('import.name')
+rule('import.name')
   .match('import', value);
 
 /**
@@ -132,14 +132,14 @@ expression('import.name')
  * TODO: need better pattern.
  */
 
-expression('import.content')
+rule('import.content')
   .match(/[^;]+/, value);
 
 /**
  * Comment.
  */
 
-expression('comment')
+rule('comment')
   .match(
     ':comment.start',
     ':comment.body',
@@ -150,69 +150,69 @@ expression('comment')
  * Comment start.
  */
 
-expression('comment.start')
+rule('comment.start')
   .match('/*', value);
 
 /**
  * TODO: need better patterns.
- * Maybe add not operator for subexpressions?
+ * Maybe add not operator for subrules?
  */
 
-expression('comment.body')
+rule('comment.body')
   .match(/[^*\/]+/, value);
 
 /**
  * Comment end.
  */
 
-expression('comment.end')
+rule('comment.end')
   .match('*/', value);
 
 /**
  * Opening bracket.
  */
 
-expression('punctuation.bracket.begin')
+rule('punctuation.bracket.begin')
   .match('{', value);
 
 /**
  * Closing bracket.
  */
 
-expression('punctuation.bracket.end')
+rule('punctuation.bracket.end')
   .match('}', value);
 
 /**
  * Period.
  */
 
-expression('punctuation.period')
+rule('punctuation.period')
   .match('.', value);
 
 /**
  * Colon.
  */
 
-expression('punctuation.colon')
+rule('punctuation.colon')
   .match(':', value);
 
 /**
  * Semicolon.
  */
 
-expression('punctuation.semicolon')
+rule('punctuation.semicolon')
   .match(';', value);
 
 /**
  * At symbol.
  */
 
-expression('punctuation.at')
+rule('punctuation.at')
   .match('@', value);
 
 /**
  * Whitespace.
  */
 
-expression('ws')
+rule('ws')
   .match(/[\s]*/, value);
