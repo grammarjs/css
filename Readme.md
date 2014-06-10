@@ -1,8 +1,22 @@
 
-# languagejs-css
+# grammarjs-css
 
-## Resources
+CSS Language Grammar.
 
-- https://github.com/reworkcss/css-parse/blob/master/index.js
-- https://github.com/dmajda/pegjs/blob/master/examples/css.pegjs
-- https://github.com/chriskempson/tomorrow-theme/blob/master/Atom/Tomorrow-Night-Blue/index.less
+## Installation
+
+node.js:
+
+```
+$ npm install grammarjs-css
+```
+
+browser:
+
+```
+$ component install grammarjs/css
+```
+
+## Licence
+
+MIT
